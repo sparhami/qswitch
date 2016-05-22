@@ -1,0 +1,23 @@
+[dark-theme="true"] {
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #212121;
+}
+
+[dark-theme="true"] .inputbox,
+[dark-theme="true"] .suggestion-group {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[dark-theme="true"] .secondary-text {
+  opacity: 0.54;
+}
+
+[dark-theme="true"] ::-webkit-scrollbar-track {
+  background-color: #212121;
+  border-color: #212121;
+}
+
+[dark-theme="true"] ::-webkit-scrollbar-thumb {
+  background-color: #424242;
+  border-color: #212121;
+}

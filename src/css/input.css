@@ -1,0 +1,17 @@
+.input-wrapper {
+  position: relative;
+}
+
+.input-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  transition: transform 0.25s;
+  transform: scale3d(0,1,1);
+}
+
+.inputbox:focus + .input-line {
+  transform: scale3d(1,1,1);
+}

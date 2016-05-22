@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "qswitch",
+  "description": "An extension that provides quick switching to tabs/bookmarks",
+  "version": "1.0.7",
+  "background": {
+    "scripts": ["src/launcher.js"],
+    "persistent": false
+  },
+  "commands": {
+    "launch-switcher": {
+      "suggested_key": {
+        "default": "Alt+Q"
+      },
+      "description": "Launch qswitch"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "bookmarks"
+  ]
+}

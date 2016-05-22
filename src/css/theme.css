@@ -1,0 +1,66 @@
+.input-line {
+  background-color: #2962ff;
+}
+
+[group-color="0"] {
+  border-color: #448aff;
+}
+
+[group-color="1"] {
+  border-color: #536dfe;
+}
+
+[group-color="2"] {
+  border-color: #40c4ff;
+}
+
+[group-color="3"] {
+  border-color: #69f0ae;
+}
+
+[group-color="4"] {
+  border-color: #ff5252;
+}
+
+[group-color="5"] {
+  border-color: #e040fb;
+}
+
+[group-color="6"] {
+  border-color: #7c4dff;
+}
+
+[group-color="7"] {
+  border-color: #b2ff59;
+}
+
+[group-color="8"] {
+  border-color: #ffd740;
+}
+
+[group-color="9"] {
+  border-color: #ffab40;
+}
+
+[role="option"][aria-selected="true"] {
+  color: white;
+  background-color: #2962ff;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+[dark-theme] ::-webkit-scrollbar-thumb:active {
+  background-color: #2962ff;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-width: 6px;
+  border-style: solid;
+}
+
+body {
+  background-color: #212121;
+}

@@ -1,0 +1,92 @@
+@import './input.css';
+
+@import './theme.css';
+@import './theme-dark.css';
+@import './theme-light.css';
+
+body {
+  display: flex;
+  margin: 0;
+  overflow: hidden;
+}
+
+.view-root {
+  display: flex;
+  flex: 1;
+  padding: 12px;
+}
+
+.search-combobox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.search-content {
+  overflow-y: auto;
+  flex: 1;
+  align-self: stretch;
+  margin: 12px 0;
+}
+
+.inputbox {
+  box-sizing: border-box;
+  min-width: 300px;
+  max-width: 50%;
+  padding: 6px;
+
+  outline: none;
+  border: none;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  color: inherit;
+  background-color: transparent;
+}
+
+.item {
+  padding: 6px;
+  margin: 0 12px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.suggestion-group {
+  display: block;
+  margin: 16px 0;
+  border-left: 2px solid;
+}
+
+.suggestion-group:empty {
+  display: none;
+}
+
+.suggestion-group[label]::before {
+  content: attr(label);
+  line-height: 2;
+  padding-left: 10px;
+}
+
+.tab-group {
+  display: block;
+  margin-left: -2px;
+
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+
+.tab-group:not(:last-of-type) {
+  margin-bottom: 10px;
+}
+
+.item-url {
+  padding: 0 6px;
+
+  font-style: italic;
+}
+
+.tab-url[title-matches="true"] {
+  display: none;
+}

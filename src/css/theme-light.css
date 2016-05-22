@@ -1,0 +1,23 @@
+[dark-theme="false"] {
+  color: #000;
+  background-color: #f5f5f5;
+}
+
+[dark-theme="false"] .inputbox,
+[dark-theme="false"] .suggestion-group {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+[dark-theme="false"] .secondary-text {
+  opacity: 0.7;
+}
+
+[dark-theme="false"] ::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-color: #f5f5f5;
+}
+
+[dark-theme="false"] ::-webkit-scrollbar-thumb {
+  background-color: #e0e0e0;
+  border-color: #f5f5f5;
+}
