@@ -37,7 +37,7 @@ function attachCombobox(el) {
     items.forEach(item => item.setAttribute('aria-selected', item === selected));
 
     if (selected) {
-      selected.scrollIntoViewIfNeeded();
+      requestAnimationFrame(() => selected.scrollIntoViewIfNeeded());
       selected.id = selected.id || 'opt' + selectedIndex;
       getInput().setAttribute('aria-activedescendant', selected.id);
     }
