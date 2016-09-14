@@ -19,6 +19,10 @@ const data = {
   darkTheme: localStorage.darkTheme == "true"
 };
 
+function afterRender(cb) {
+  requestAnimationFrame(() => setTimeout(cb));
+}
+
 function renderMatch(text, index, length) {
   const preText = text.substr(0, index);
   const matchText = text.substr(index, length);
@@ -250,9 +254,7 @@ function renderSearchFor(query) {
 }
 
 update();
-updateQuery('');
-
-})();
+afterRender(() => updateQuery(''));
 
 function loadScript(src) {
   if (document.head.querySelector('script[src="${src}"]')) {
@@ -268,6 +270,11 @@ window.addEventListener('load', () => {
   loadScript('components/s-combobox.js');
 });
 
-chrome.tabs.onActivated.addListener(() => {
-  window.close();  
+afterRender(() => {
+  chrome.tabs.onActivated.addListener(() => {
+    window.close();  
+  });
 });
+
+})();
+
