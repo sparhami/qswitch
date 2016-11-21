@@ -3,7 +3,7 @@
 
   "name": "qswitch",
   "description": "An extension that provides quick switching to tabs/bookmarks",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "background": {
     "scripts": ["src/launcher.js"],
     "persistent": false
