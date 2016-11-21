@@ -39,7 +39,7 @@ function renderText(text, match) {
   const matchIndex = text.toLowerCase().indexOf(match.toLowerCase());
 
   if (matchIndex < 0) {
-    txt(text);
+    renderMatch(text, text.length, 0);
   } else {
     renderMatch(text, matchIndex, match.length);
   }
@@ -86,10 +86,6 @@ function updateQuery(query) {
   }).then(update);
 }
 
-function doSearch(query, e) {
-  Tabs.open(`https://www.google.com/search?q=${query}`, e.ctrlKey);
-}
-
 function handleInput(e) {
   updateQuery(e.target.value.trim());
 }
@@ -102,10 +98,6 @@ function handleTabAction() {
 
 function handleUrlAction(e) {
   Tabs.open(this.dataset.url, e.ctrlKey);
-}
-
-function handleSearchAction(e) {
-  doSearch(this.dataset.query, e);
 }
 
 function handleSettingAction() {
@@ -144,7 +136,6 @@ function render(data) {
       'dark-theme', data.darkTheme);
     eo('s-combobox', null, null,
         'class', 'search-combobox',
-        'initial-index', data.query ? 1 : 0,
         'query', data.query);
       eo('div', null, null,
           'class', 'input-wrapper');
@@ -157,7 +148,6 @@ function render(data) {
           'id', 'search-content',
           'class', 'search-content',
           'role', 'listbox');
-        renderSearchFor(data.query);
         renderTabs(data.tabs, data.query);
         renderBookmarks(data.bookmarks, data.query);
         renderPages(data.pages, data.query);
@@ -236,20 +226,6 @@ function renderPages(pages, query) {
         renderText(page.text, query);
       ec('div');
     });
-  ec('s-group');
-}
-
-function renderSearchFor(query) {
-  eo('s-group', null, null,
-      'class', 'suggestion-group');
-    if (query) {
-      eo('div', null, itemAttrs,
-          'data-query', query,
-          'onclick', handleSearchAction);
-        txt('Search for ');
-       eo('em');txt(query);ec('em');
-      ec('div');
-    }
   ec('s-group');
 }
 
