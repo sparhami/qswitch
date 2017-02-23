@@ -2,12 +2,13 @@
 
 (function() {
 
-const idom = IncrementalDOM;
-const patch = idom.patch;
-const eo = idom.elementOpen;
-const ec = idom.elementClose;
-const ev = idom.elementVoid;
-const txt = idom.text;
+const {
+  patch,
+  elementOpen: eo,
+  elementClose: ec,
+  elementVoid: ev,
+  text: txt,
+} = IncrementalDOM; 
 
 const container = document.body;
 const data = {
@@ -58,36 +59,29 @@ function update(newData) {
   patch(container, render, Object.assign(data, newData));
 }
 
-function updateQuery(query) {
-  Promise.all([
+async function updateQuery(query) {
+  const [ tabs, bookmarks, settings, pages ] = await Promise.all([
     Tabs.getMatches(query),
     Bookmarks.getMatches(query),
     Settings.getMatches(query),
     Pages.getMatches(query)
-  ]).then(res => {
-    return {
-      tabs: res[0],
-      bookmarks: res[1],
-      settings: res[2],
-      pages: res[3]
-    };
-  }).then(data => {
-    const tabUrls = new Set(data.tabs.map(tab => tab.url));
-    const bookmarks = data.bookmarks.filter(b => !tabUrls.has(b.url));
-    const groupedTabs = groupBy(data.tabs, tab => tab.windowId); 
+  ]);
+  
+  const tabUrls = new Set(tabs.map(tab => tab.url));
+  const filteredBookmarks = bookmarks.filter(b => !tabUrls.has(b.url));
+  const groupedTabs = groupBy(tabs, tab => tab.windowId); 
 
-    return {
-      tabs: groupedTabs,
-      bookmarks: bookmarks,
-      settings: data.settings,
-      pages: data.pages,
-      query: query
-    };
-  }).then(update);
+  update({
+    tabs: groupedTabs,
+    bookmarks: filteredBookmarks,
+    settings,
+    pages,
+    query,
+  });
 }
 
 function handleInput(e) {
-  updateQuery(e.target.value.trim());
+  updateQuery(this.value.trim());
 }
 
 function handleTabAction() {

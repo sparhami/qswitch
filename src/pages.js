@@ -33,17 +33,17 @@ function matchesQuery(queryParts, str) {
 
 function getMatches(query) {
   if (!query) {
-    return Promise.resolve([]);   
+    return [];
   }
 
   const queryParts = query.toLowerCase().split(' ');
   const matchingPages = pages.filter(p => matchesQuery(queryParts, p.text));
 
-  return Promise.resolve(matchingPages);
+  return matchingPages;
 }
 
 return {
-  getMatches: getMatches
+  getMatches,
 };
 
 })();

@@ -15,25 +15,23 @@ function matchesQuery(queryParts, str) {
 /**
  * Get all tabs matching a query string in either their title or url.
  */
-function getMatches(query) {
+async function getMatches(query) {
   const queryParts = query.toLowerCase().split(' ');
+  const tabs = await queryTabs({});
 
-  return queryTabs({})
-    .then(tabs => {
-      return tabs
-        .filter(tab => tab.url !== 'chrome://newtab/')
-        .map(tab => Object.assign({}, tab, {
-          matchesTitle: matchesQuery(queryParts, tab.title),
-          matchesUrl: matchesQuery(queryParts, tab.url)
-        }))
-        .filter(tab => tab.matchesTitle || tab.matchesUrl);
-    });
+  return tabs
+    .filter(tab => tab.url !== 'chrome://newtab/')
+    .map(tab => Object.assign({}, tab, {
+      matchesTitle: matchesQuery(queryParts, tab.title),
+      matchesUrl: matchesQuery(queryParts, tab.url)
+    }))
+    .filter(tab => tab.matchesTitle || tab.matchesUrl);
 }
 
 function switchTo(windowId, index) {
   chrome.tabs.highlight({
     windowId: windowId,
-    tabs: index
+    tabs: index,
   });
   chrome.windows.update(windowId, { focused: true });
 }
@@ -46,9 +44,9 @@ function open(url, inBackground) {
 }
 
 return {
-  getMatches: getMatches,
-  switchTo: switchTo,
-  open: open
+  getMatches,
+  switchTo,
+  open,
 };
 
 })();

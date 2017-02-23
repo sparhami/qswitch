@@ -23,17 +23,17 @@ function matchesQuery(queryParts, str) {
 
 function getMatches(query) {
   if (!query) {
-    return Promise.resolve([]);   
+    return [];   
   }
 
   const queryParts = query.toLowerCase().split(' ');
   const matchingSettings = settings.filter(s => matchesQuery(queryParts, s.text));
 
-  return Promise.resolve(matchingSettings);
+  return matchingSettings;
 }
 
 return {
-  getMatches: getMatches
+  getMatches,
 };
 
 })();
