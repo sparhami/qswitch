@@ -3,7 +3,7 @@ var zip = require('gulp-zip');
 
 var srcs = [
   'manifest.json',
-  'node_modules/incremental-dom/dist/incremental-dom.js',
+  'node_modules/incremental-dom/dist/incremental-dom-min.js',
   'src/**/*'
 ];
 
