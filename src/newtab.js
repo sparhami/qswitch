@@ -13,6 +13,7 @@ const {
 const container = document.body;
 const data = {
   tabs: {},
+  sessions: {},
   bookmarks: [],
   settings: [],
   pages: [],
@@ -60,8 +61,9 @@ function update(newData) {
 }
 
 async function updateQuery(query) {
-  const [ tabs, bookmarks, settings, pages ] = await Promise.all([
+  const [ tabs, sessions, bookmarks, settings, pages ] = await Promise.all([
     Tabs.getMatches(query),
+    Sessions.getMatches(query),
     Bookmarks.getMatches(query),
     Settings.getMatches(query),
     Pages.getMatches(query)
@@ -73,6 +75,7 @@ async function updateQuery(query) {
 
   update({
     tabs: groupedTabs,
+    sessions,
     bookmarks: filteredBookmarks,
     settings,
     pages,
@@ -143,6 +146,7 @@ function render(data) {
           'class', 'search-content',
           'role', 'listbox');
         renderTabs(data.tabs, data.query);
+        renderSessions(data.sessions, data.query);
         renderBookmarks(data.bookmarks, data.query);
         renderPages(data.pages, data.query);
         renderSettings(data.settings, data.query);
@@ -150,7 +154,6 @@ function render(data) {
     ec('s-combobox');
   ec('div');
 }
-
 
 function renderTabs(tabGroups, query) {
   eo('s-group', null, null,
@@ -165,6 +168,31 @@ function renderTabs(tabGroups, query) {
               'data-index', tab.index,
               'data-window-id', tab.windowId,
               'onclick', handleTabAction);
+            renderText(tab.title, query);
+            eo('span', null, null,
+                'class', 'item-url tab-url secondary-text',
+                'title-matches', tab.matchesTitle);
+              renderText(tab.url, query);
+            ec('span');
+          ec('div');
+        });
+      ec('s-group');
+    });
+  ec('s-group');
+}
+
+function renderSessions(sessions, query) {
+  eo('s-group', null, null,
+      'class', 'suggestion-group',
+      'label', 'Sessions');
+    Object.keys(sessions).forEach((index) => {
+      eo('s-group', null, null,
+          'class', 'tab-group',
+          'group-color', index % 10);
+        sessions[index].forEach((tab) => {
+          eo('div', null, itemAttrs,
+              'data-url', tab.url,
+              'onclick', handleUrlAction);
             renderText(tab.title, query);
             eo('span', null, null,
                 'class', 'item-url tab-url secondary-text',
