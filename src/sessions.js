@@ -12,13 +12,15 @@ function matchesQuery(queryParts, str) {
   return queryParts.every(part => lowerCaseStr.indexOf(part) >= 0);
 }
 
+const sessionsPromise = querySessions({});
+
 /**
  * Get all remote sessions and their tabs matching a query string in either
  * their title or url.
  */
 async function getMatches(query) {
   const queryParts = query.toLowerCase().split(' ');
-  const devices = await querySessions({});
+  const devices = await sessionsPromise;
 
   return devices
     .map(device => device.sessions)
