@@ -127,12 +127,19 @@ const itemAttrs = [
   'role', 'option'
 ];
 
+function suggestionsLabel(label) {
+  eo('div', null, null,
+      'class', 'suggestion-group-label theme-bg')
+    txt(label);
+  ec('div');
+}
+
 function render(data) {
   eo('div', null, null,
       'class', 'view-root',
       'dark-theme', data.darkTheme);
     eo('s-combobox', null, null,
-        'class', 'search-combobox',
+        'class', 'search-combobox theme-bg',
         'query', data.query);
       eo('div', null, null,
           'class', 'input-wrapper');
@@ -156,10 +163,17 @@ function render(data) {
 }
 
 function renderTabs(tabGroups, query) {
+  const keys = Object.keys(tabGroups);
+
+  if (!keys.length) {
+    return;
+  }
+
   eo('s-group', null, null,
-      'class', 'suggestion-group',
-      'label', 'Tabs');
-    Object.keys(tabGroups).forEach((windowId) => {
+      'key', 'tabs',
+      'class', 'suggestion-group');
+    suggestionsLabel('Tabs');
+    keys.forEach((windowId) => {
       eo('s-group', null, null,
           'class', 'tab-group',
           'group-color', windowId % 10);
@@ -182,10 +196,17 @@ function renderTabs(tabGroups, query) {
 }
 
 function renderSessions(sessions, query) {
+  const keys = Object.keys(sessions);
+
+  if (!keys.length) {
+    return;
+  }
+
   eo('s-group', null, null,
-      'class', 'suggestion-group',
-      'label', 'Sessions');
-    Object.keys(sessions).forEach((index) => {
+      'key', 'sessions',
+      'class', 'suggestion-group');
+    suggestionsLabel('Sessions');
+    keys.forEach((index) => {
       eo('s-group', null, null,
           'class', 'tab-group',
           'group-color', index % 10);
@@ -207,9 +228,14 @@ function renderSessions(sessions, query) {
 }
 
 function renderBookmarks(bookmarks, query) {
+  if (!bookmarks.length) {
+    return;
+  }
+
   eo('s-group', null, null,
-      'class', 'suggestion-group',
-      'label', 'Bookmarks');
+      'key', 'bookmarks',
+      'class', 'suggestion-group');
+    suggestionsLabel('Bookmarks');
     bookmarks.forEach((bookmark) => {
       eo('div', null, itemAttrs,
           'data-url', bookmark.url,
@@ -225,8 +251,14 @@ function renderBookmarks(bookmarks, query) {
 }
 
 function renderSettings(settings, query) {
+  if (!settings.length) {
+    return;
+  }
+
   eo('s-group', null, null,
+      'key', 'settings',
       'class', 'suggestion-group');
+    suggestionsLabel('Settings');
     settings.forEach((setting) => {
       eo('div', null, itemAttrs,
           'data-setting-name', setting.name,
@@ -239,8 +271,14 @@ function renderSettings(settings, query) {
 }
 
 function renderPages(pages, query) {
+  if (!pages.length) {
+    return;
+  }
+
   eo('s-group', null, null,
+      'key', 'pages',
       'class', 'suggestion-group');
+    suggestionsLabel('Chrome');
     pages.forEach((page) => {
       eo('div', null, itemAttrs,
           'data-url', page.url,

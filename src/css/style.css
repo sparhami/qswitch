@@ -59,12 +59,11 @@ body {
   border-left: 2px solid;
 }
 
-.suggestion-group:empty {
-  display: none;
-}
-
-.suggestion-group[label]::before {
-  content: attr(label);
+.suggestion-group-label {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: block;
   line-height: 2;
   padding-left: 10px;
 }
