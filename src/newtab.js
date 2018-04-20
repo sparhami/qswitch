@@ -153,8 +153,8 @@ function render(data) {
           'class', 'search-content',
           'role', 'listbox');
         renderTabs(data.tabs, data.query);
-        renderSessions(data.sessions, data.query);
         renderBookmarks(data.bookmarks, data.query);
+        renderSessions(data.sessions, data.query);
         renderPages(data.pages, data.query);
         renderSettings(data.settings, data.query);
       ec('div');
