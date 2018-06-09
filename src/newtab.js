@@ -3,6 +3,8 @@ import * as Pages from './pages.js';
 import * as Sessions from './sessions.js';
 import * as Settings from './settings.js';
 import * as Tabs from './tabs.js';
+import {afterRender} from './lib/after_render.js';
+import {groupBy} from './lib/collect.js';
 
 const {
   patch,
@@ -22,10 +24,6 @@ const data = {
   query: '',
   darkTheme: localStorage.darkTheme == "true"
 };
-
-function afterRender(cb) {
-  requestAnimationFrame(() => setTimeout(cb));
-}
 
 function renderMatch(text, index, length) {
   const preText = text.substr(0, index);
@@ -47,15 +45,6 @@ function renderText(text, match) {
   } else {
     renderMatch(text, matchIndex, match.length);
   }
-}
-
-function groupBy(arr, fn) {
-  return arr.reduce((obj, item) => {
-    const key = fn(item);
-    obj[key] = obj[key] || [];
-    obj[key].push(item);
-    return obj;
-  }, {});
 }
 
 function update(newData) {
@@ -171,9 +160,7 @@ function renderTabs(tabGroups, query) {
     return;
   }
 
-  eo('s-group', null, null,
-      'key', 'tabs',
-      'class', 'suggestion-group');
+  eo('s-group');
     suggestionsLabel('Tabs');
     keys.forEach((windowId) => {
       eo('s-group', null, null,
@@ -204,9 +191,7 @@ function renderSessions(sessions, query) {
     return;
   }
 
-  eo('s-group', null, null,
-      'key', 'sessions',
-      'class', 'suggestion-group');
+  eo('s-group');
     suggestionsLabel('Sessions');
     keys.forEach((index) => {
       eo('s-group', null, null,
@@ -234,9 +219,7 @@ function renderBookmarks(bookmarks, query) {
     return;
   }
 
-  eo('s-group', null, null,
-      'key', 'bookmarks',
-      'class', 'suggestion-group');
+  eo('s-group');
     suggestionsLabel('Bookmarks');
     bookmarks.forEach((bookmark) => {
       eo('div', null, itemAttrs,
@@ -257,9 +240,7 @@ function renderSettings(settings, query) {
     return;
   }
 
-  eo('s-group', null, null,
-      'key', 'settings',
-      'class', 'suggestion-group');
+  eo('s-group');
     suggestionsLabel('Settings');
     settings.forEach((setting) => {
       eo('div', null, itemAttrs,
@@ -277,9 +258,7 @@ function renderPages(pages, query) {
     return;
   }
 
-  eo('s-group', null, null,
-      'key', 'pages',
-      'class', 'suggestion-group');
+  eo('s-group');
     suggestionsLabel('Chrome');
     pages.forEach((page) => {
       eo('div', null, itemAttrs,
@@ -293,14 +272,12 @@ function renderPages(pages, query) {
 
 update();
 afterRender(() => updateQuery(''));
-
-window.addEventListener('load', () => {
-  import('./components/s-combobox.js');
-});
-
 afterRender(() => {
   chrome.tabs.onActivated.addListener(() => {
     window.close();  
   });
 });
 
+window.addEventListener('load', () => {
+  import('./components/s-combobox.js');
+});

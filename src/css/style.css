@@ -53,7 +53,7 @@ body {
   text-overflow: ellipsis;
 }
 
-.suggestion-group {
+s-group {
   display: block;
   margin: 16px 0;
   border-left: 2px solid;

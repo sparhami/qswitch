@@ -8,7 +8,7 @@
 }
 
 [dark-theme="false"] .inputbox,
-[dark-theme="false"] .suggestion-group {
+[dark-theme="false"] s-group {
   border-color: rgba(0, 0, 0, 0.12);
 }
 
