@@ -5,6 +5,7 @@ import * as Settings from './settings.js';
 import * as Tabs from './tabs.js';
 import {afterRender} from './lib/after_render.js';
 import {groupBy} from './lib/collect.js';
+import './components/s-combobox.js';
 
 const {
   patch,
@@ -278,6 +279,3 @@ afterRender(() => {
   });
 });
 
-window.addEventListener('load', () => {
-  import('./components/s-combobox.js');
-});
