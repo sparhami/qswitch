@@ -1,7 +1,3 @@
-'use strict';
-
-const Pages = (function() {
-
 const pages = [
   {
     text: 'history',
@@ -42,8 +38,6 @@ function getMatches(query) {
   return matchingPages;
 }
 
-return {
+export {
   getMatches,
 };
-
-})();

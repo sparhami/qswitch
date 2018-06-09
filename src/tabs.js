@@ -1,7 +1,3 @@
-'use strict';
-
-const Tabs = (function() {
-
 function queryTabs(obj) {
   return new Promise(resolve => chrome.tabs.query(obj, resolve));
 }
@@ -43,10 +39,8 @@ function open(url, inBackground) {
   });
 }
 
-return {
+export {
   getMatches,
   switchTo,
   open,
 };
-
-})();

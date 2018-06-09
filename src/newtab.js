@@ -1,6 +1,8 @@
-'use strict';
-
-(function() {
+import * as Bookmarks from './bookmarks.js';
+import * as Pages from './pages.js';
+import * as Sessions from './sessions.js';
+import * as Settings from './settings.js';
+import * as Tabs from './tabs.js';
 
 const {
   patch,
@@ -292,18 +294,8 @@ function renderPages(pages, query) {
 update();
 afterRender(() => updateQuery(''));
 
-function loadScript(src) {
-  if (document.head.querySelector('script[src="${src}"]')) {
-    return;
-  }
-
-  const script = document.head.appendChild(document.createElement('script'));
-  script.src = src;
-}
-
-
 window.addEventListener('load', () => {
-  loadScript('components/s-combobox.js');
+  import('./components/s-combobox.js');
 });
 
 afterRender(() => {
@@ -311,6 +303,4 @@ afterRender(() => {
     window.close();  
   });
 });
-
-})();
 

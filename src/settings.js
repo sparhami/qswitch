@@ -1,7 +1,3 @@
-'use strict';
-
-const Settings = (function() {
-
 const settings = [
   {
     text: 'set dark theme',
@@ -32,8 +28,6 @@ function getMatches(query) {
   return matchingSettings;
 }
 
-return {
+export {
   getMatches,
 };
-
-})();

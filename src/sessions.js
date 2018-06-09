@@ -1,7 +1,3 @@
-'use strict';
-
-const Sessions = (function() {
-
 function querySessions(obj) {
   return new Promise(resolve => chrome.sessions.getDevices(obj, resolve));
 }
@@ -40,8 +36,6 @@ async function getMatches(query) {
     .filter(tabs => tabs.length);
 }
 
-return {
+export {
   getMatches,
 };
-
-})();

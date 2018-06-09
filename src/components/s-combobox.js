@@ -1,5 +1,3 @@
-'use strict';
-
 function attachCombobox(el) {
   let selectedIndex = -1;
   let selectedItem = null;
@@ -75,8 +73,9 @@ function attachCombobox(el) {
   }
 }
 
-document.registerElement('s-combobox', class extends HTMLElement {
-  createdCallback() {
+customElements.define('s-combobox', class extends HTMLElement {
+  constructor() {
+    super();
     attachCombobox(this);
   }
 });
