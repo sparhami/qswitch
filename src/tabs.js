@@ -20,7 +20,7 @@ async function getMatches(query) {
   const tabs = await queryTabs({});
 
   return tabs
-    .filter(tab => tab.url !== 'chrome://newtab/')
+    .filter(tab => tab.url !== location.href)
     .map(tab => Object.assign({}, tab, {
       matchesTitle: matchesQuery(queryParts, tab.title),
       matchesUrl: matchesQuery(queryParts, tab.url)
