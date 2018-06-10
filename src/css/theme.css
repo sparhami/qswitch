@@ -44,6 +44,11 @@
 
 [role="option"][aria-selected="true"] {
   color: white;
+  background-color: #616161;
+}
+
+:focus-within [role="option"][aria-selected="true"] {
+  color: white;
   background-color: #2962ff;
 }
 
