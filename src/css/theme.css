@@ -1,71 +1,122 @@
-.input-line {
-  background-color: #2962ff;
+.inputbox {
+  border-color: var(--border-color);
 }
 
-[dark-theme] [group-color="0"] {
+.input-line {
+  background-color: var(--primary-theme-color);
+}
+
+s-group {
+  border-left-color: var(--border-color);
+}
+
+s-group[has-nested-groups] {
+  border-left-color: transparent;
+}
+
+[group-color="0"] {
   border-color: #448aff;
 }
 
-[dark-theme] [group-color="1"] {
+[group-color="1"] {
   border-color: #536dfe;
 }
 
-[dark-theme] [group-color="2"] {
+[group-color="2"] {
   border-color: #40c4ff;
 }
 
-[dark-theme] [group-color="3"] {
+[group-color="3"] {
   border-color: #69f0ae;
 }
 
-[dark-theme] [group-color="4"] {
+[group-color="4"] {
   border-color: #ff5252;
 }
 
-[dark-theme] [group-color="5"] {
+[group-color="5"] {
   border-color: #e040fb;
 }
 
-[dark-theme] [group-color="6"] {
+[group-color="6"] {
   border-color: #7c4dff;
 }
 
-[dark-theme] [group-color="7"] {
+[group-color="7"] {
   border-color: #b2ff59;
 }
 
-[dark-theme] [group-color="8"] {
+[group-color="8"] {
   border-color: #ffd740;
 }
 
-[dark-theme] [group-color="9"] {
+[group-color="9"] {
   border-color: #ffab40;
 }
 
 [role="option"][aria-selected="true"] {
-  color: white;
-  background-color: #616161;
+  color: var( --light-text-color);
+  background-color: var(--highlighted-background-color);
 }
 
 :focus-within [role="option"][aria-selected="true"] {
-  color: white;
-  background-color: #2962ff;
+  color: var( --light-text-color);
+  background-color: var(--primary-theme-color);
 }
 
 ::-webkit-scrollbar {
   width: 16px;
 }
 
-[dark-theme] ::-webkit-scrollbar-thumb:active {
-  background-color: #2962ff;
-}
-
 ::-webkit-scrollbar-track,
 ::-webkit-scrollbar-thumb {
+  background-color: var(--primary-background-color);
   border-width: 6px;
   border-style: solid;
+  border-color: var(--primary-background-color);
 }
 
-body {
-  background-color: #212121;
+::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-background-color);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: var(--primary-theme-color);
+}
+
+body,
+.theme-bg {
+  color: var(--primary-color);
+  background-color: var(--primary-background-color);
+}
+
+.secondary-text {
+  color: var(--secondary-color);
+}
+
+html {
+  --light-text-color: #eee;
+  --highlighted-background-color: #616161;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    --primary-background-color: #212121;
+    --primary-color: var( --light-text-color);
+    --primary-theme-color: #2962ff;
+    --border-color: rgba(255, 255, 255, 0.24);
+    --secondary-color: #999;
+    --secondary-background-color: #424242;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html {
+    --primary-background-color: #f5f5f5;
+    --primary-color: #000;
+    --primary-theme-color: #2962ff;
+    --border-color: rgba(0, 0, 0, 0.24);
+    --secondary-color: #bbb;
+    --secondary-background-color: #e0e0e0;
+  }
 }

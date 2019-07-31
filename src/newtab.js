@@ -1,7 +1,6 @@
 import * as Bookmarks from './bookmarks.js';
 import * as Pages from './pages.js';
 import * as Sessions from './sessions.js';
-import * as Settings from './settings.js';
 import * as Tabs from './tabs.js';
 import {afterRender} from './lib/after_render.js';
 import {groupBy} from './lib/collect.js';
@@ -20,10 +19,8 @@ const data = {
   tabs: {},
   sessions: {},
   bookmarks: [],
-  settings: [],
   pages: [],
   query: '',
-  darkTheme: localStorage.darkTheme == "true"
 };
 
 function renderMatch(text, index, length) {
@@ -53,11 +50,10 @@ function update(newData) {
 }
 
 async function updateQuery(query) {
-  const [ tabs, sessions, bookmarks, settings, pages ] = await Promise.all([
+  const [ tabs, sessions, bookmarks, pages ] = await Promise.all([
     Tabs.getMatches(query),
     Sessions.getMatches(query),
     Bookmarks.getMatches(query),
-    Settings.getMatches(query),
     Pages.getMatches(query)
   ]);
   
@@ -69,7 +65,6 @@ async function updateQuery(query) {
     tabs: groupedTabs,
     sessions,
     bookmarks: filteredBookmarks,
-    settings,
     pages,
     query,
   });
@@ -87,19 +82,6 @@ function handleTabAction() {
 
 function handleUrlAction(e) {
   Tabs.open(this.dataset.url, e.ctrlKey);
-}
-
-function handleSettingAction() {
-  switch(this.dataset.settingName) {
-    case 'darkTheme':
-      updateTheme(this.dataset.settingValue === 'true');
-      break;
-  }
-}
-
-function updateTheme(isDark) {
-  update({ darkTheme: isDark });
-  localStorage.darkTheme = isDark;
 }
 
 const searchboxAttrs = [
@@ -128,8 +110,7 @@ function suggestionsLabel(label) {
 
 function render(data) {
   eo('div', null, null,
-      'class', 'view-root',
-      'dark-theme', data.darkTheme);
+      'class', 'view-root');
     eo('s-combobox', null, null,
         'class', 'search-combobox theme-bg',
         'query', data.query);
@@ -148,7 +129,6 @@ function render(data) {
         renderBookmarks(data.bookmarks, data.query);
         renderSessions(data.sessions, data.query);
         renderPages(data.pages, data.query);
-        renderSettings(data.settings, data.query);
       ec('div');
     ec('s-combobox');
   ec('div');
@@ -161,7 +141,8 @@ function renderTabs(tabGroups, query) {
     return;
   }
 
-  eo('s-group');
+  eo('s-group', null, null,
+      'has-nested-groups', true);
     suggestionsLabel('Tabs');
     keys.forEach((windowId) => {
       eo('s-group', null, null,
@@ -192,7 +173,8 @@ function renderSessions(sessions, query) {
     return;
   }
 
-  eo('s-group');
+  eo('s-group', null, null,
+      'has-nested-groups', true);
     suggestionsLabel('Sessions');
     keys.forEach((index) => {
       eo('s-group', null, null,
@@ -231,24 +213,6 @@ function renderBookmarks(bookmarks, query) {
             'class', 'item-url secondary-text');
           renderText(bookmark.url, query);
         ec('span');
-      ec('div');
-    });
-  ec('s-group');
-}
-
-function renderSettings(settings, query) {
-  if (!settings.length) {
-    return;
-  }
-
-  eo('s-group');
-    suggestionsLabel('Settings');
-    settings.forEach((setting) => {
-      eo('div', null, itemAttrs,
-          'data-setting-name', setting.name,
-          'data-setting-value', setting.value,
-          'onclick', handleSettingAction);
-        renderText(setting.text, query);
       ec('div');
     });
   ec('s-group');
