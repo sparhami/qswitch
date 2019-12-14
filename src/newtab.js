@@ -86,7 +86,6 @@ function handleUrlAction(e) {
 
 const searchboxAttrs = [
   'class', 'inputbox',
-  'autofocus', '',
   'type', 'search',
   'placeholder', 'search',
   'role', 'combobox',
@@ -236,6 +235,8 @@ function renderPages(pages, query) {
 }
 
 update();
+// Autofocus does not work
+document.querySelector('.inputbox').focus();
 afterRender(() => updateQuery(''));
 afterRender(() => {
   chrome.tabs.onActivated.addListener(() => {

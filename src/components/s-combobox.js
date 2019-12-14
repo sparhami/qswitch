@@ -22,10 +22,10 @@ function attachCombobox(el) {
   }
 
   function navigate(delta) {
-    setSelected(delta + selectedIndex);
+    setSelected(delta + selectedIndex, true);
   }
 
-  function setSelected(index) {
+  function setSelected(index, needsScroll) {
     const items = getItems();
     const newIndex = Math.max(0, Math.min(index, items.length - 1));
     const selected = items[newIndex];
@@ -34,11 +34,20 @@ function attachCombobox(el) {
     selectedItem = selected;
     items.forEach(item => item.setAttribute('aria-selected', item === selected));
 
-    if (selected) {
-      requestAnimationFrame(() => selected.scrollIntoViewIfNeeded());
-      selected.id = selected.id || 'opt' + selectedIndex;
-      selected.dispatchEvent(new CustomEvent('s-selected'));
-      getInput().setAttribute('aria-activedescendant', selected.id);
+    if (!selected) {
+      return;
+    }
+
+    selected.id = selected.id || 'opt' + selectedIndex;
+    selected.dispatchEvent(new CustomEvent('s-selected'));
+    getInput().setAttribute('aria-activedescendant', selected.id);
+
+    if (needsScroll) {
+      requestAnimationFrame(() => {
+        selected.scrollIntoView({
+          block: 'center',
+        });
+      });
     }
   }
 
