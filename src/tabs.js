@@ -1,7 +1,3 @@
-function queryTabs(obj) {
-  return new Promise(resolve => chrome.tabs.query(obj, resolve));
-}
-
 function matchesQuery(queryParts, str) {
   const lowerCaseStr = str.toLowerCase();
 
@@ -13,13 +9,24 @@ function matchesQuery(queryParts, str) {
  */
 async function getMatches(query) {
   const queryParts = query.toLowerCase().split(' ');
-  const tabs = await queryTabs({});
+  const [
+    tabs,
+    tabGroups,
+  ] = await Promise.all([
+    chrome.tabs.query({}),
+    chrome.tabGroups.query({}),
+  ]);
+  const tabGroupsById = tabGroups.reduce((acc, tabGroup) => {
+    acc[tabGroup.id] = tabGroup;
+    return acc;
+  }, {});
 
   return tabs
     .filter(tab => tab.url !== location.href)
     .map(tab => Object.assign({}, tab, {
       matchesTitle: matchesQuery(queryParts, tab.title),
-      matchesUrl: matchesQuery(queryParts, tab.url)
+      matchesUrl: matchesQuery(queryParts, tab.url),
+      group: tabGroupsById[tab.groupId],
     }))
     .filter(tab => tab.matchesTitle || tab.matchesUrl);
 }

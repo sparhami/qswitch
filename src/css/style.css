@@ -54,6 +54,12 @@ body {
   text-overflow: ellipsis;
 }
 
+.item[data-has-group="true"] {
+  border-left: 2px solid var(--group-color);
+  margin-left: 20px;
+  padding-left: 20px;
+}
+
 s-group {
   display: block;
   border-left-style: solid;

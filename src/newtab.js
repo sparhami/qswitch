@@ -151,6 +151,10 @@ function renderTabs(tabGroups, query) {
           eo('div', null, itemAttrs,
               'data-index', tab.index,
               'data-window-id', tab.windowId,
+              'data-has-group', !!tab.group,
+              'style', {
+                "--group-color": tab.group?.color || "",
+              },
               'onclick', handleTabAction);
             renderText(tab.title, query);
             eo('span', null, null,

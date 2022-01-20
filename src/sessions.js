@@ -1,14 +1,10 @@
-function querySessions(obj) {
-  return new Promise(resolve => chrome.sessions.getDevices(obj, resolve));
-}
-
 function matchesQuery(queryParts, str) {
   const lowerCaseStr = str.toLowerCase();
 
   return queryParts.every(part => lowerCaseStr.indexOf(part) >= 0);
 }
 
-const sessionsPromise = querySessions({});
+const sessionsPromise = chrome.sessions.getDevices({});
 
 /**
  * Get all remote sessions and their tabs matching a query string in either
