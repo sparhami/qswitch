@@ -12,6 +12,10 @@
   transform: scale3d(0,1,1);
 }
 
+.inputbox {
+  font-size: inherit;
+}
+
 .inputbox:focus + .input-line {
   transform: scale3d(1,1,1);
 }

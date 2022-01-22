@@ -4,9 +4,6 @@ function attachCombobox(el) {
 
   el.addEventListener('keydown', handleKeydown);
   el.addEventListener('mouseover', handleHover);
-
-  const mo = new MutationObserver(childrenUpdated);
-  mo.observe(el, { childList: true, subtree: true });
   childrenUpdated();
 
   function getItems() {
@@ -80,6 +77,8 @@ function attachCombobox(el) {
       default:
         break;
     }
+
+    childrenUpdated();
   }
 }
 

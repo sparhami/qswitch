@@ -4,6 +4,7 @@ import * as Sessions from './sessions.js';
 import * as Tabs from './tabs.js';
 import {afterRender} from './lib/after_render.js';
 import {groupBy} from './lib/collect.js';
+import { lazyContent } from './lazy-content.js';
 import './components/s-combobox.js';
 
 const {
@@ -148,21 +149,7 @@ function renderTabs(tabGroups, query) {
           'class', 'tab-group',
           'group-color', windowId % 10);
         tabGroups[windowId].forEach((tab) => {
-          eo('div', null, itemAttrs,
-              'data-index', tab.index,
-              'data-window-id', tab.windowId,
-              'data-has-group', !!tab.group,
-              'style', {
-                "--group-color": tab.group?.color || "",
-              },
-              'onclick', handleTabAction);
-            renderText(tab.title, query);
-            eo('span', null, null,
-                'class', 'item-url tab-url secondary-text',
-                'title-matches', tab.matchesTitle);
-              renderText(tab.url, query);
-            ec('span');
-          ec('div');
+          renderLocalTab(tab, query);
         });
       ec('s-group');
     });
@@ -184,16 +171,7 @@ function renderSessions(sessions, query) {
           'class', 'tab-group',
           'group-color', index % 10);
         sessions[index].forEach((tab) => {
-          eo('div', null, itemAttrs,
-              'data-url', tab.url,
-              'onclick', handleUrlAction);
-            renderText(tab.title, query);
-            eo('span', null, null,
-                'class', 'item-url tab-url secondary-text',
-                'title-matches', tab.matchesTitle);
-              renderText(tab.url, query);
-            ec('span');
-          ec('div');
+          renderSessionTab(tab, query);
         });
       ec('s-group');
     });
@@ -208,15 +186,7 @@ function renderBookmarks(bookmarks, query) {
   eo('s-group');
     suggestionsLabel('Bookmarks');
     bookmarks.forEach((bookmark) => {
-      eo('div', null, itemAttrs,
-          'data-url', bookmark.url,
-          'onclick', handleUrlAction);
-        renderText(bookmark.title, query);
-        eo('span', null, null,
-            'class', 'item-url secondary-text');
-          renderText(bookmark.url, query);
-        ec('span');
-      ec('div');
+      renderBookmark(bookmark, query);
     });
   ec('s-group');
 }
@@ -229,14 +199,68 @@ function renderPages(pages, query) {
   eo('s-group');
     suggestionsLabel('Chrome');
     pages.forEach((page) => {
-      eo('div', null, itemAttrs,
-          'data-url', page.url,
-          'onclick', handleUrlAction);
-        renderText(page.text, query);
-      ec('div');
+      renderPage(page, query);
     });
   ec('s-group');
 }
+
+function renderLocalTab(tab, query) {
+  eo('div', null, itemAttrs,
+      'data-index', tab.index,
+      'data-window-id', tab.windowId,
+      'data-has-group', !!tab.group,
+      'style', {
+        "--group-color": tab.group?.color || "",
+      },
+      'onclick', handleTabAction);
+    lazyContent(() => {
+      renderText(tab.title, query);
+      eo('span', null, null,
+          'class', 'item-url tab-url secondary-text',
+          'title-matches', tab.matchesTitle);
+        renderText(tab.url, query);
+      ec('span');
+    });
+  ec('div');
+}
+
+function renderSessionTab(tab, query) {
+  eo('div', null, itemAttrs,
+      'data-url', tab.url,
+      'onclick', handleUrlAction);
+    lazyContent(() => {
+      renderText(tab.title, query);
+      eo('span', null, null,
+          'class', 'item-url tab-url secondary-text',
+          'title-matches', tab.matchesTitle);
+        renderText(tab.url, query);
+      ec('span');
+    });
+  ec('div');
+}
+
+function renderBookmark(bookmark, query) {
+  eo('div', null, itemAttrs,
+      'data-url', bookmark.url,
+      'onclick', handleUrlAction);
+    lazyContent(() => {
+      renderText(bookmark.title, query);
+      eo('span', null, null,
+          'class', 'item-url secondary-text');
+        renderText(bookmark.url, query);
+      ec('span');
+    });
+  ec('div');
+}
+
+function renderPage(page, query) {
+  eo('div', null, itemAttrs,
+      'data-url', page.url,
+      'onclick', handleUrlAction);
+    renderText(page.text, query);
+  ec('div');
+}
+
 
 update();
 // Autofocus does not work

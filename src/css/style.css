@@ -5,6 +5,7 @@ body {
   display: flex;
   margin: 0;
   overflow: hidden;
+  font-size: 15px;
 }
 
 .view-root {
@@ -48,6 +49,8 @@ body {
 .item {
   padding: 6px;
   margin: 0 12px;
+  height: 22px;
+  contain: strict;
 
   overflow: hidden;
   white-space: nowrap;
@@ -56,8 +59,8 @@ body {
 
 .item[data-has-group="true"] {
   border-left: 2px solid var(--group-color);
-  margin-left: 20px;
-  padding-left: 20px;
+  margin-left: -2px;
+  padding-left: 18px;
 }
 
 s-group {
