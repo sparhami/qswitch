@@ -4,6 +4,7 @@ function attachCombobox(el) {
 
   el.addEventListener('keydown', handleKeydown);
   el.addEventListener('mouseover', handleHover);
+  el.addEventListener('input', childrenUpdated);
   childrenUpdated();
 
   function getItems() {
@@ -74,11 +75,7 @@ function attachCombobox(el) {
         navigate(e.keyCode - 39);
         e.preventDefault();
         break;
-      default:
-        break;
     }
-
-    childrenUpdated();
   }
 }
 
