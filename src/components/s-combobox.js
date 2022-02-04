@@ -4,8 +4,6 @@ function attachCombobox(el) {
 
   el.addEventListener('keydown', handleKeydown);
   el.addEventListener('mouseover', handleHover);
-  el.addEventListener('input', childrenUpdated);
-  childrenUpdated();
 
   function getItems() {
     return [].slice.call(el.querySelectorAll('[role="option"]'));
@@ -13,10 +11,6 @@ function attachCombobox(el) {
 
   function getInput() {
     return el.querySelector('[role="combobox"]');
-  }
-
-  function childrenUpdated() {
-    setSelected(Number(el.getAttribute('initial-index')));
   }
 
   function navigate(delta) {
@@ -77,11 +71,19 @@ function attachCombobox(el) {
         break;
     }
   }
+
+  return {
+    setSelected,
+  };
 }
 
 customElements.define('s-combobox', class extends HTMLElement {
   constructor() {
     super();
-    attachCombobox(this);
+    this.implementation = attachCombobox(this);
+  }
+
+  select(index) {
+    this.implementation.setSelected(index);
   }
 });

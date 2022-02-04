@@ -69,6 +69,9 @@ async function updateQuery(query) {
     pages,
     query,
   });
+
+  const combobox = container.querySelector("s-combobox");
+  combobox.select(0);
 }
 
 function handleInput(e) {
