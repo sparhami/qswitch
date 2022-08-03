@@ -4,7 +4,6 @@ import * as Sessions from './sessions.js';
 import * as Tabs from './tabs.js';
 import {afterRender} from './lib/after_render.js';
 import {groupBy} from './lib/collect.js';
-import { lazyContent } from './lazy-content.js';
 import './components/s-combobox.js';
 
 const {
@@ -216,14 +215,12 @@ function renderLocalTab(tab, query) {
         "--group-color": tab.group?.color || "",
       },
       'onclick', handleTabAction);
-    lazyContent(() => {
-      renderText(tab.title, query);
-      eo('span', null, null,
-          'class', 'item-url tab-url secondary-text',
-          'title-matches', tab.matchesTitle);
-        renderText(tab.url, query);
-      ec('span');
-    });
+    renderText(tab.title, query);
+    eo('span', null, null,
+        'class', 'item-url tab-url secondary-text',
+        'title-matches', tab.matchesTitle);
+      renderText(tab.url, query);
+    ec('span');
   ec('div');
 }
 
@@ -231,14 +228,12 @@ function renderSessionTab(tab, query) {
   eo('div', null, itemAttrs,
       'data-url', tab.url,
       'onclick', handleUrlAction);
-    lazyContent(() => {
-      renderText(tab.title, query);
-      eo('span', null, null,
-          'class', 'item-url tab-url secondary-text',
-          'title-matches', tab.matchesTitle);
-        renderText(tab.url, query);
-      ec('span');
-    });
+    renderText(tab.title, query);
+    eo('span', null, null,
+        'class', 'item-url tab-url secondary-text',
+        'title-matches', tab.matchesTitle);
+      renderText(tab.url, query);
+    ec('span');
   ec('div');
 }
 
@@ -246,13 +241,11 @@ function renderBookmark(bookmark, query) {
   eo('div', null, itemAttrs,
       'data-url', bookmark.url,
       'onclick', handleUrlAction);
-    lazyContent(() => {
-      renderText(bookmark.title, query);
-      eo('span', null, null,
-          'class', 'item-url secondary-text');
-        renderText(bookmark.url, query);
-      ec('span');
-    });
+    renderText(bookmark.title, query);
+    eo('span', null, null,
+        'class', 'item-url secondary-text');
+      renderText(bookmark.url, query);
+    ec('span');
   ec('div');
 }
 
