@@ -12,7 +12,7 @@
     "incremental-dom": "~0.5.0"
   },
   "devDependencies": {
-    "gulp": "~3.9.0",
+    "gulp": "~4.0.2",
     "gulp-clean-css": "^3.10.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-zip": "~3.0.2",
